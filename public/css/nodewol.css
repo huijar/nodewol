@@ -1,0 +1,71 @@
+body {
+    background-color: #f9f9f9
+}
+
+div.hero-unit {
+    background-color: #333 !important
+    color: #eee !important
+}
+
+.clear {
+    clear: both;
+}
+
+div.accordion-heading {
+    background-image: linear-gradient(bottom, rgb(22,22,22) 33%, rgb(44,44,44) 66%);
+    background-image: -o-linear-gradient(bottom, rgb(22,22,22) 33%, rgb(44,44,44) 66%);
+    background-image: -moz-linear-gradient(bottom, rgb(22,22,22) 33%, rgb(44,44,44) 66%);
+    background-image: -webkit-linear-gradient(bottom, rgb(22,22,22) 33%, rgb(44,44,44) 66%);
+    background-image: -ms-linear-gradient(bottom, rgb(22,22,22) 33%, rgb(44,44,44) 66%);
+
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0.33, rgb(22,22,22)),
+        color-stop(0.66, rgb(44,44,44))
+    );
+}
+
+div.accordion-heading a {
+    color: #eee;
+}
+
+.center {
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 0.5em;
+}
+
+div.accordion-body {
+    text-align: left;
+    color: #555;
+    background-image: linear-gradient(bottom, rgb(204,204,204) 33%, rgb(238,238,238) 66%);
+    background-image: -o-linear-gradient(bottom, rgb(204,204,204) 33%, rgb(238,238,238) 66%);
+    background-image: -moz-linear-gradient(bottom, rgb(204,204,204) 33%, rgb(238,238,238) 66%);
+    background-image: -webkit-linear-gradient(bottom, rgb(204,204,204) 33%, rgb(238,238,238) 66%);
+    background-image: -ms-linear-gradient(bottom, rgb(204,204,204) 33%, rgb(238,238,238) 66%);
+
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0.33, rgb(204,204,204)),
+        color-stop(0.66, rgb(238,238,238))
+    );
+}
+
+/*
+tspan {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    cursor: default;
+}
+*/

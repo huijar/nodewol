@@ -1,0 +1,42 @@
+!!!5
+html
+    head
+        title NodeWOL - A simple wake-on-lan-tool
+        link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
+        link(rel='stylesheet', href='/bootstrap/css/bootstrap-responsive.min.css')
+        script(src='/js/jquery-1.8.3.min.js')
+        script(src='/bootstrap/js/bootstrap.min.js')
+        script(src='/js/underscore-min.js')
+        script(src='/js/raphael-min.js')
+        script(src='/js/backbone-min.js')
+        script(src='/backbone/models/clock.js')
+        script(src='/backbone/views/clock.js')
+        script(src='/js/nodewol.js')
+
+        link(rel='stylesheet', href='/css/nodewol.css')
+
+        // HTML5 shim, for IE6-8 support of HTML5 elements
+        //if lt IE 9
+            script(src='http://html5shim.googlecode.com/svn/trunk/html5.js')
+    body
+        .container
+            .hero-unit
+                h1 Nodewol
+                p A simple wake-on-lan tool
+            .row-fluid
+                .span6.center
+                    block content
+                .span6.center
+                    block clock
+            hr
+            footer
+                div.pull-left
+                    p Running on node, underscore, backbone, Raphaël, jQuery and Bootstrap.
+
+                div.pull-right.raspi
+                    p.pull-right
+                        | For use with 
+                        a(href='http://www.raspberrypi.org/') Raspberry Pi &reg; 
+                            img(src='/img/raspi.gif')
+                    p.clear.pull-right.muted
+                        small Raspberry Pi is a trademark of the Raspberry Pi Foundation.
