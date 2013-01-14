@@ -1,33 +1,6 @@
 extend layout
 block content
     h1.center Wake
-    div.accordion#devlist
-        div.accordion-group
-            div.accordion-heading
-                a.accordion-toggle(data-toggle='collapse', data-parent='#devlist', href='#devOne') ENTERPRISE
-            div.accordion-body.collapse.in#devOne
-                div.accordion-inner
-                    img.pull-right(src='/img/icons/tower.png')
-                    p MAC: e0:cb:4e:ba:b3:0e
-                    p IP: 192.168.2.11
-        div.accordion-group
-            div.accordion-heading
-                a.accordion-toggle(data-toggle='collapse', data-parent='#devlist', href='#devTwo') ATLANTIS
-            div.accordion-body.collapse#devTwo
-                div.accordion-inner
-                    img.pull-right(src='/img/icons/tower.png')
-                    p MAC: 00:1f:16:1c:0f:cf
-                    p IP: 192.168.2.12
-//    table
-//        tr
-//            th MAC
-//            th IP
-//            th hostname
-//        - list.forEach(function(dev){
-//            tr
-//                td #{dev.mac}
-//                td #{dev.ip}
-//                td #{dev.name}
-//        - })
+    div#devlist
 block clock
     div#clock

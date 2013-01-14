@@ -7,11 +7,67 @@ div.hero-unit {
     color: #eee !important
 }
 
+.accordion-body input.edit {
+    display: none;
+}
+
+.accordion-body input.edit {
+    width: 100%;
+}
+
+.editing a.edit {
+    display: none;
+}
+
+.editing input.edit {
+    display: inline;
+}
+
 .clear {
     clear: both;
 }
 
-div.accordion-heading {
+.dropdown-menu img {
+    height: 64px;
+}
+
+.dropdown-menu li {
+    float: left;
+}
+
+.dropdown-menu {
+    padding: 5px 5px;
+}
+
+.dropdown-toggle > img {
+    padding-bottom: 30px;
+}
+
+a.dropdown-toggle {
+    float: right;
+    line-height: 150px;
+    height: 150px;
+}
+
+#devlist .btn {
+    margin-bottom: 1em;
+}
+
+#devlist table {
+    width: 50%;
+}
+
+#devlist table td {
+    border-top: 0px solid #444;
+}
+
+#devlist {
+    width: 100%;
+    max-width: 400px;
+    display: inline-block;
+}
+
+div.accordion-heading, .th {
     background-image: linear-gradient(bottom, rgb(22,22,22) 33%, rgb(44,44,44) 66%);
     background-image: -o-linear-gradient(bottom, rgb(22,22,22) 33%, rgb(44,44,44) 66%);
     background-image: -moz-linear-gradient(bottom, rgb(22,22,22) 33%, rgb(44,44,44) 66%);
@@ -25,6 +81,8 @@ div.accordion-heading {
         color-stop(0.33, rgb(22,22,22)),
         color-stop(0.66, rgb(44,44,44))
     );
+
+    color: #eee;
 }
 
 div.accordion-heading a {

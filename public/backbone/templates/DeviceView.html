@@ -1,0 +1,32 @@
+<%
+var thisdev = currdev !== undefined && currdev !== null && currdev.id == id;
+var relname = ( name === undefined ? ip : name );
+var title = ( thisdev ? "This computer (" + relname + ")" : relname )
+%>
+<div class="accordion-heading">
+    <a class="accordion-toggle" data-toggle='collapse' data-parent="#devlist" href="#<%= strip(id) %>"><%= title %></a>
+</div>
+<div class="accordion-body collapse<%= ( thisdev ? ' in' : '' ) %>" id="<%= strip(id) %>">
+    <div class="accordion-inner">
+        <div class="dropdown">
+            <a data-target="#" data-toggle="dropdown" id="<%= strip(id) %>-img" rel="tooltip" class="dropdown-toggle" data-placement="left" data-original-title="Click to edit"><img src="/img/icons/<%= type %>.png"></a>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="<%= strip(id) %>-img">
+                <li><a class="tower"><img src="/img/icons/tower.png"></a></li>
+                <li><a class="laptop"><img src="/img/icons/laptop.png"></a></li>
+                <li><a class="desktop"><img src="/img/icons/desktop.png"></a></li>
+            </ul>
+        </div>
+        <a class="btn details">Show details</a>
+        <table class="table table-condensed" style="display: none">
+            <tr>
+                <td>Name</td><td><a class="edit" rel="tooltip" data-original-title="Click to edit"><%= relname %></a><input class="edit" value="<%= relname %>"></input></td>
+            <tr>
+            <tr>
+                <td>MAC</td><td><%= id %></td>
+            <tr>
+            <tr>
+                <td>IP</td><td><%= ip %></td>
+            <tr>
+        </table>
+    </div>
+</div>

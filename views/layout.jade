@@ -10,7 +10,12 @@ html
         script(src='/js/raphael-min.js')
         script(src='/js/backbone-min.js')
         script(src='/backbone/models/clock.js')
+        script(src='/backbone/models/device.js')
         script(src='/backbone/views/clock.js')
+        script(src='/backbone/views/device.js')
+        script(src='/backbone/collections/device.js')
+        script(src='/backbone/views/devicelist.js')
+        script(src='/js/utils.js')
         script(src='/js/nodewol.js')
 
         link(rel='stylesheet', href='/css/nodewol.css')
@@ -28,6 +33,10 @@ html
                     block content
                 .span6.center
                     block clock
+            hr
+            .row-fluid
+                .span12.center
+                    a.btn.btn-large <i class='icon-ok'></i> Add an alert
             hr
             footer
                 div.pull-left

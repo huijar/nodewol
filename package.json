@@ -11,6 +11,7 @@
         "nib": "*",
         "arp": "*",
         "pcap": "*",
-        "wake_on_lan": "*"
+        "wake_on_lan": "*",
+        "dirty": "*"
     }
 }
