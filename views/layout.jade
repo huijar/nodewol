@@ -15,6 +15,10 @@ html
         script(src='/backbone/views/device.js')
         script(src='/backbone/collections/device.js')
         script(src='/backbone/views/devicelist.js')
+        script(src='/backbone/models/alarm.js')
+        script(src='/backbone/views/alarm.js')
+        script(src='/backbone/collections/alarm.js')
+        script(src='/backbone/views/alarmlist.js')
         script(src='/js/utils.js')
         script(src='/js/nodewol.js')
 
@@ -36,7 +40,9 @@ html
             hr
             .row-fluid
                 .span12.center
-                    a.btn.btn-large <i class='icon-ok'></i> Add an alert
+                    a.btn.btn-large#add-alarm <i class='icon-ok'></i> Add an alarm
+            .row-fluid
+                .span12#alarm-container
             hr
             footer
                 div.pull-left

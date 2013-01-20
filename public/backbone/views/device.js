@@ -6,6 +6,7 @@ window.DeviceView = Backbone.View.extend({
     },
 
     events: {
+        'show .accordion-body': 'selectThis',
         'click .btn.details': 'toggleDetails',
         'click a.edit': 'edit',
         'keydown input': 'editKeyPress',
@@ -13,6 +14,10 @@ window.DeviceView = Backbone.View.extend({
         'click a.tower': 'typeTower',
         'click a.laptop': 'typeLaptop',
         'click a.desktop': 'typeDesktop',
+    },
+
+    selectThis: function() {
+        deviceList.selected = this.model;
     },
 
     toggleDetails: function() {
@@ -42,7 +47,7 @@ window.DeviceView = Backbone.View.extend({
         }
         else if ( e.which == 13 ) // Enter
         {
-            this.model.set('name', this.$input.attr('value'));
+            this.model.set('name', this.$input.attr('value').replace(/<(?:.|\n)*?>/gm, ''));
             this.model.save();
             this.$el.removeClass("editing");
         }
@@ -86,6 +91,10 @@ window.DeviceView = Backbone.View.extend({
             this.$el.find("table").show();
             this.$el.find(".btn.details").html("Hide details");
         }
+
+        if ( this.$el.find(".accordion-body").hasClass("in") )
+            this.selectThis();
+
         this.$el.find("a[rel=tooltip]").tooltip();
         this.$input = this.$("input.edit");
         this.$editlink = this.$("a.edit");

@@ -42,5 +42,18 @@ utils.loadTemplate(['DeviceView'], function() {
         setInterval(function() {
             window.deviceList.fetch({update: true});
         }, 10000);
+
+        $("#add-alarm").on("click", function() {
+            window.alarmList.create({ "device": deviceList.selected.toJSON(), "time": clock.toJSON() });
+        });
     }, "json");
+});
+utils.loadTemplate(['AlarmView'], function() {
+    window.alarmList = new AlarmCollection();
+    alarmList.fetch({ success: function() {
+        new AlarmListView({ model: alarmList, el: $("#alarm-container")}).render();
+    }});
+    setInterval(function() {
+        window.alarmList.fetch({update: true});
+    }, 10000);
 });

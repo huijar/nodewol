@@ -25,6 +25,8 @@ var db = require('dirty')('device.db');
 var wol = require('wake_on_lan');
 var child;
 var nbtscan_available;
+var alarms = [];
+var alarmIndex = 0;
 
 /*
  * Setting up the database
@@ -333,8 +335,57 @@ app.get('/api/devices/:id', function(req, res) {
 });
 
 app.put('/api/devices/:id', function(req, res) {
+    req.body.name = req.body.name.replace(/<(?:.|\n)*?>/gm, '');
     db.set(req.params.id, req.body);
     res.send(200);
+});
+
+app.put('/api/alarms/:id', function(req, res) {
+    console.log(req.params);
+    res.send(201);
+    return;
+});
+
+app.get('/api/alarms', function(req, res) {
+    var ret = [];
+    _.each(alarms, function(element) {
+        ret.push(element.alarm);
+    });
+    res.json(ret);
+});
+
+app.delete('/api/alarms/:id', function(req, res) {
+    console.log("Canceling timeout #" + req.params.id);
+    clearTimeout(alarms[req.params.id].handle);
+    delete alarms[req.params.id];
+    res.send(204);
+});
+
+app.post('/api/alarms', function(req, res) {
+    var currtime = new Date();
+    var altime = new Date(currtime);
+    altime.setSeconds(0);
+    altime.setHours(req.body.time.h);
+    altime.setMinutes(req.body.time.m);
+
+    var delta = altime - currtime;
+
+    // If the time has already passed, add 24 hours to it
+    if ( delta < 0 )
+    {
+        delta += 24*60*60*1000;
+    }
+
+    var new_alarm = setTimeout(function (index) {
+        console.log("Trying to wake up " + req.body.device.id + "...");
+        wol.wake(req.body.device.id);
+        delete alarms[index];
+    }, delta);
+    var next = alarmIndex++;
+    alarms[next] = { alarm: req.body, handle: new_alarm };
+    req.body.id = next;
+    req.body.delta = delta;
+    res.status(201).json(req.body);
 });
 
 app.listen(port);

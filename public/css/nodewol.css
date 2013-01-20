@@ -28,7 +28,7 @@ div.hero-unit {
 }
 
 .dropdown-menu img {
-    height: 64px;
+    height: 48px;
 }
 
 .dropdown-menu li {
@@ -41,6 +41,10 @@ div.hero-unit {
 
 .dropdown-toggle > img {
     padding-bottom: 30px;
+}
+
+#add-alarm {
+    margin-bottom: 20px;
 }
 
 a.dropdown-toggle {
