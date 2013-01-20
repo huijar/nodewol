@@ -41,6 +41,6 @@ utils.loadTemplate(['DeviceView'], function() {
         }});
         setInterval(function() {
             window.deviceList.fetch({update: true});
-        }, 30000);
+        }, 10000);
     }, "json");
 });

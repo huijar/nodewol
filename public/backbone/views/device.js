@@ -27,6 +27,7 @@ window.DeviceView = Backbone.View.extend({
     edit: function() {
         this.$el.addClass("editing");
         this.$input.focus();
+        this.$input.select();
     },
 
     cancelEdit: function() {

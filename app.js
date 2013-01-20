@@ -3,7 +3,8 @@
  */
 
 var port = 1337                 // The port to listen to
-var subnet = false   // The subnet to scan for macs, false if you don't want to scan
+var subnet = "192.168.2.0/24"   // The subnet you want to examine
+var disable_full_nbtscan = true // True if you want to disable
 var exclude_macs = ['00:1a:9f:90:86:6a']
 
 // OTA TÄÄ POIS
@@ -24,6 +25,7 @@ var sys = require('util')
 var os = require('os')
 var exec = require('child_process').exec
 var db = require('dirty')('device.db')
+var wol = require('wake_on_lan')
 var child
 var nbtscan_available
 
@@ -56,15 +58,21 @@ db.on('drain', function() {
 
 // A simple query function for the dirty db
 
-db.q = function(field, s) {
+db.q = function(field, s, cb) {
     var ret = false
     this.forEach(function(key, value) {
         if (value[field] == s)
         {
             ret = key
+            if (cb) {
+                cb(ret);
+            }
             return false
         }
     })
+    if (!ret && cb) {
+        cb(ret);
+    }
     return ret
 }
 
@@ -86,9 +94,9 @@ db.has = function(key) {
 
 console.log("Own IPs: ")
 
-var ownips = _.map(os.networkInterfaces(), function(element) { return _.first(_.pluck(element, "address")) } )
+var discard_ips = _.map(os.networkInterfaces(), function(element) { return _.first(_.pluck(element, "address")) } )
 
-_.each(ownips, function(val) {
+_.each(discard_ips, function(val) {
     console.log(val);
 });
 
@@ -159,7 +167,7 @@ parse_nbtscan = function(line) {
 }
 
 add_dev = function(dev) {
-    if (!_.contains(ownips, dev.ip) && !db.has(dev.id) && dev.ip.length > 0 && dev.id.length > 0 && !_.contains(exclude_macs, dev.id))
+    if (!_.contains(discard_ips, dev.ip) && !db.has(dev.id) && dev.ip.length > 0 && dev.id.length > 0 && !_.contains(exclude_macs, dev.id))
     {
         db.set(dev.id, dev)
         console.log("Pushed " + dev.id)
@@ -167,7 +175,7 @@ add_dev = function(dev) {
 }
 
 nbtscan_full = function() {
-    if (subnet == false) return
+    if (disable_full_nbtscan) return
     console.log("Issuing a full nbtscan of "+subnet)
     var child = exec("nbtscan -s , -r "+subnet, function(error,stdout,stderr) {
         if (error == null)
@@ -180,15 +188,57 @@ nbtscan_full = function() {
     })
 }
 
+/*
+ * PCAP shouldn't try to add devices from another networks
+ * anyway, but just to be sure let's double-check.
+ */
+
+in_subnet = function(ip) {
+    var sub = subnet.split('/');
+    var netip = sub[0].split('.');
+    var testip = ip.split('.');
+
+    var netip_bin = ( parseInt(netip[0]) << 24 )
+        | ( parseInt(netip[1]) << 16 )
+        | ( parseInt(netip[2]) << 8 )
+        | ( parseInt(netip[3]) << 0 );
+    var testip_bin = ( parseInt(testip[0]) << 24 )
+        | ( parseInt(testip[1]) << 16 )
+        | ( parseInt(testip[2]) << 8 )
+        | ( parseInt(testip[3]) << 0 );
+
+    var mask = 0;
+    for (var i = 31 - sub[1]; i <= 31; i++)
+    {
+        mask |= 1 << i;
+    }
+
+    if ( ( netip_bin & mask ) == ( testip_bin & mask ) )
+    {
+        return true;
+    }
+    else
+    {
+        console.log("Discarding " + ip + ", not in specified subnet.");
+        discard_ips.push(ip);
+        return false;
+    }
+}
+
 updatenames = function(all) {
     all = typeof all !== 'undefined' ? all : false;
     db.forEach(function(key, val) {
         if (all || val.name == "" || val.name == undefined)
         {
-            console.log("Updating name for " + val.ip)
-            dns.reverse(val.ip, function(err, domains) {
-                val.name = err ? nbtscan(val.ip) : _.first(domains)
-            })
+            try {
+                console.log("Updating name for " + val.ip)
+                dns.reverse(val.ip, function(err, domains) {
+                    val.name = err ? nbtscan(val.ip) : _.first(domains)
+                })
+            } catch (err)
+            {
+                console.log("Skipping, '" + val.ip + "' not a valid IP.");
+            }
         }
     })
 }
@@ -196,12 +246,22 @@ updatenames = function(all) {
 updatedevlist = function(packet) {
     var smac = packet.link.shost
     var sip = packet.link.ip.saddr
-    if (_.contains(ownips, sip) == false && !db.has(smac) && !_.contains(exclude_macs, smac))
+    var currdev = db.get(smac);
+    if (_.contains(discard_ips, sip) == false && in_subnet(sip) && currdev == undefined && !_.contains(exclude_macs, smac))
     {
         var dev = { name: sip, id: smac, ip: sip, type: "tower" }
         add_dev(dev)
         console.log("Pushed " + smac)
         updatenames()
+    }
+    else if (currdev != undefined && sip != currdev.ip)
+    {
+        db.q("ip", sip, function(olddev) {
+            db.u(currdev.id, "ip", sip);
+            if ( olddev && olddev != currdev.id) {
+                db.u(olddev, "ip", "-");
+            }
+        });
     }
 }
 
@@ -211,7 +271,8 @@ setInterval(updatenames, 1800000);
  * PCAP listener
  */
 
-var pcap_session = pcap.createSession("", "tcp")
+//var pcap_session = pcap.createSession("", "tcp")
+var pcap_session = pcap.createSession("", "src net "+subnet+" and tcp" )
 
 console.log("Listening on " + pcap_session.device_name);
 
