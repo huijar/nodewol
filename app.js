@@ -258,8 +258,11 @@ updatedevlist = function(packet) {
     else if (currdev != undefined && sip != currdev.ip)
     {
         db.q("ip", sip, function(olddev) {
+            if ( currdev.name == currdev.ip )
+                db.u(currdev.id, "name", sip);
             db.u(currdev.id, "ip", sip);
             if ( olddev && olddev != currdev.id) {
+                // TODO: Update the olddev name as well if needed
                 db.u(olddev, "ip", "-");
             }
         });
@@ -376,12 +379,13 @@ app.post('/api/alarms', function(req, res) {
         delta += 24*60*60*1000;
     }
 
-    var new_alarm = setTimeout(function (index) {
+    var next = alarmIndex++;
+
+    var new_alarm = setTimeout(function () {
         console.log("Trying to wake up " + req.body.device.id + "...");
         wol.wake(req.body.device.id);
-        delete alarms[index];
+        delete alarms[next];
     }, delta);
-    var next = alarmIndex++;
     alarms[next] = { alarm: req.body, handle: new_alarm };
     req.body.id = next;
     req.body.delta = delta;

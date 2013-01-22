@@ -9,7 +9,10 @@ window.AlarmListView = Backbone.View.extend({
         if ( this.model.models.length == 1 )
             this.$el.html('');
 
-        this.$el.append(new AlarmView({model:alarm}).render().el);
+        var added = new AlarmView({model:alarm}).render().el;
+        $(added).hide();
+        this.$el.append(added);
+        $(added).fadeIn();
     },
 
     render: function() {

@@ -22,36 +22,40 @@ html
         script(src='/js/utils.js')
         script(src='/js/nodewol.js')
 
+        link(rel='stylesheet', href='/css/colaborate/stylesheet.css')
         link(rel='stylesheet', href='/css/nodewol.css')
 
         // HTML5 shim, for IE6-8 support of HTML5 elements
         //if lt IE 9
             script(src='http://html5shim.googlecode.com/svn/trunk/html5.js')
     body
-        .container
-            .hero-unit
-                h1 Nodewol
-                p A simple wake-on-lan tool
+        .navbar.navbar-static-top.navbar-inverse
+            .navbar-inner
+                a.brand Nodewol
+                ul.nav
+                    li 
+                        a A simple wake-on-lan tool
+        .container-fluid
+            .row-fluid.visible-desktop
+                .span12.spacer
             .row-fluid
-                .span6.center
+                .span4.center
                     block content
-                .span6.center
+                .span4.center
                     block clock
-            hr
-            .row-fluid
-                .span12.center
-                    a.btn.btn-large#add-alarm <i class='icon-ok'></i> Add an alarm
-            .row-fluid
-                .span12#alarm-container
-            hr
-            footer
-                div.pull-left
-                    p Running on node, underscore, backbone, Raphaël, jQuery and Bootstrap.
+                .span4.center
+                    a.btn.btn-large.btn-inverse#add-alarm <i class='icon-ok icon-white'></i> Add an alarm
+                    br
+                    div.well#alarm-container
+            .row-fluid.visible-desktop
+                .span12.spacer
 
-                div.pull-right.raspi
-                    p.pull-right
-                        | For use with 
-                        a(href='http://www.raspberrypi.org/') Raspberry Pi &reg; 
-                            img(src='/img/raspi.gif')
-                    p.clear.pull-right.muted
-                        small Raspberry Pi is a trademark of the Raspberry Pi Foundation.
+        .navbar.navbar-fixed-bottom
+            .navbar-inner
+                ul.nav
+                    li
+                        a Running on node, underscore, backbone, Raphaël, jQuery and Bootstrap.
+                ul.nav.pull-right
+                    li
+                        a(href='http://www.raspberrypi.org/', title='Raspberry Pi is a trademark of the Raspberry Pi Foundation.', target='_blank') For use with Raspberry Pi &reg; 
+                            img(src='/img/raspi.png')

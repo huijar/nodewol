@@ -207,6 +207,9 @@ var ClockView = Backbone.View.extend({
         this.h_text = this.paper.text( this.h.attr('cx'), this.h.attr('cy'), this.model.h() )
         this.m_text = this.paper.text( this.m.attr('cx'), this.m.attr('cy'), this.model.m() )
 
+        this.h_text.attr({ "font-family": "'ColaborateLightRegular', Helvetica, Arial, sans-serif" });
+        this.m_text.attr({ "font-family": "'ColaborateLightRegular', Helvetica, Arial, sans-serif" });
+
         // Colours
 
         var dark = "#222"
@@ -414,8 +417,6 @@ var ClockView = Backbone.View.extend({
             path += m_coords[end][0] + "," + m_coords[end][1]
         }
 
-
-
         this.time.html(this.model.toString())
 
         /*var hpath = genpath(this.h.attr('cx'), this.h.attr('cy'), this.srad - this.ssrad, this.model.h(), 'h', this.h_text.attr('text'))
@@ -432,9 +433,12 @@ var ClockView = Backbone.View.extend({
             return coords;
         };
 
-        e.attr({along: 0})
-        run()
-        e2.attr('text', this.model.get(morh))
+        if ( path != undefined )
+        {
+            e.attr({along: 0})
+            run()
+            e2.attr('text', this.model.get(morh))
+        }
         /*
         this.h.animateAlong({
             path: hpath,

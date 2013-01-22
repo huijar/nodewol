@@ -2,9 +2,21 @@ body {
     background-color: #f9f9f9
 }
 
+div {
+    font-family: 'ColaborateLightRegular', Helvetica, Arial, sans-serif;
+}
+
 div.hero-unit {
     background-color: #333 !important
     color: #eee !important
+}
+
+h1 {
+    margin-bottom: 1em;
+}
+
+.spacer {
+    height: 60px;
 }
 
 .accordion-body input.edit {
@@ -40,17 +52,31 @@ div.hero-unit {
 }
 
 .dropdown-toggle > img {
-    padding-bottom: 30px;
+    padding-bottom: 40px;
 }
 
 #add-alarm {
-    margin-bottom: 20px;
+    margin-top: 12px;
+    margin-bottom: 34px;
 }
 
 a.dropdown-toggle {
     float: right;
-    line-height: 150px;
-    height: 150px;
+    line-height: 160px;
+    height: 160px;
+}
+
+.alert-dark {
+    color: #eee;
+    background-color: #444;
+    border-color: #111;
+    text-shadow: none;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.alert-dark button {
+    color: #fff;
 }
 
 #devlist .btn {
@@ -65,9 +91,9 @@ a.dropdown-toggle {
     border-top: 0px solid #444;
 }
 
-#devlist {
+#devlist, #alarm-container {
     width: 100%;
-    max-width: 400px;
+    max-width: 350px;
     display: inline-block;
 }
 
@@ -95,10 +121,6 @@ div.accordion-heading a {
 
 .center {
     text-align: center;
-}
-
-h1 {
-    margin-bottom: 0.5em;
 }
 
 div.accordion-body {
