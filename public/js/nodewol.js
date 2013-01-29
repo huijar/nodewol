@@ -7,6 +7,14 @@ strip = function(string) {
     return string.replace(/:/g,"");
 }
 
+window.customAlert = function(msg) {
+    var alrt = $("<div class='custom-alert alert alert-dark'></div>").hide();
+    $("body").append(alrt);
+    alrt.html(msg).fadeIn('slow').delay(4000).fadeOut('slow',function() {
+        this.remove();
+    });
+}
+
 $(document).ready(function() {
     clock = new Clock();
     clockv = new ClockView({ model: clock, el: $("div#clock") });

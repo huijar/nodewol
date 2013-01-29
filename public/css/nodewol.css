@@ -2,6 +2,15 @@ body {
     background-color: #f9f9f9
 }
 
+.custom-alert {
+    width: 400px;
+    position: fixed;
+    bottom: 50px;
+    left: 50%;
+    margin-left: -200px;
+    text-align: center;
+}
+
 div {
     font-family: 'ColaborateLightRegular', Helvetica, Arial, sans-serif;
 }
