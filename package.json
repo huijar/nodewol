@@ -1,17 +1,34 @@
 {
     "name": "nodewol",
-    "description": "A wake-on-lan utility",
-    "version": "0.0.1",
-    "private": true,
+    "description": "A simple wake-on-lan utility",
+    "author": "Jari Huilla",
+    "version": "0.0.1-beta",
+    "homepage": "https://github.com/huijar/nodewol",
+    "keywords": ["wol", "wake-on-lan"],
+    "main": "./app.js",
     "dependencies": {
         "express": "3.0.5",
-        "jade": "*",
-        "stylus": "*",
-        "underscore": "*",
-        "nib": "*",
-        "arp": "*",
-        "pcap": "*",
-        "wake_on_lan": "*",
-        "dirty": "*"
+        "jade": "0.27.7",
+        "stylus": "0.31.0",
+        "underscore": "1.4.3",
+        "nib": "0.9.0",
+        "arp": ">= 0.0.1",
+        "pcap": "0.3.0",
+        "wake_on_lan": "0.0.3",
+        "dirty": ">= 0.9.6"
+    },
+    "licences": [
+        {
+            "type": "MIT",
+            "url": "http://github.com/huijar/nodewol/raw/master/LICENSE"
+        }
+    ],
+    "engine": "node >= 0.6.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/huijar/nodewol.git"
+    },
+    "bugs": {
+        "url": "https://github.com/huijar/nodewol/issues"
     }
 }
