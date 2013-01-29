@@ -9,12 +9,12 @@ At the moment the (web-based) UI is optimized for desktop/laptop use. A fully re
 
 ## Installation
 
-Required packages are nodejs and npm. It is recommended to install nbtscan as well for NetBIOS name resolution and subnet scanning. Nodewol supports reverse DNS as well.
+Required packages are nodejs, npm, g++ and libpcap-dev (the latter two for dependencies). It is recommended to install nbtscan as well for NetBIOS name resolution and subnet scanning. Nodewol supports reverse DNS as well.
 
 On Debian Raspbian "wheezy", the recommended installation procedure is:
 
 <pre>
-sudo apt-get install nodejs npm nbtscan
+sudo apt-get install nodejs npm nbtscan g++ libpcap-dev
 npm install nodewol
 </pre>
 
