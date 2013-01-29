@@ -2,10 +2,15 @@
     "name": "nodewol",
     "description": "A simple wake-on-lan utility",
     "author": "Jari Huilla",
-    "version": "0.0.1-beta",
+    "version": "0.0.1",
     "homepage": "https://github.com/huijar/nodewol",
     "keywords": ["wol", "wake-on-lan"],
-    "main": "./app.js",
+    "bin": {
+        "nodewol": "./app.js",
+    },
+    "scripts": {
+        "start": "node ./app.js",
+    },
     "dependencies": {
         "express": "3.0.5",
         "jade": "0.27.7",
