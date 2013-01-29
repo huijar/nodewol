@@ -32,6 +32,8 @@ Currently Nodewol requires root privileges because of the packet capturing featu
 * Multiple devices may appear to have the same IP in a network with many dynamic leases.
 * The clock widget may behave a little odd occasionally.
 * If the browser window is too narrow the panels overlap.
+* Only IPv4 networks are supported.
+* There's no way to add a device manually.
 
 ## License (MIT)
 

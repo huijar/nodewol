@@ -1,11 +1,5 @@
-/*
- * Configurable options
- */
-
-var port = 1337;                 // The port to listen to
-var subnet = "192.168.2.0/24";   // The subnet you want to examine
-var disable_full_nbtscan = true; // True if you want to disable
-var exclude_macs = ['00:1a:9f:90:86:6a'];
+// Load configuration
+var config = require('./config');
 
 /*
  * Module dependencies
@@ -166,7 +160,7 @@ parse_nbtscan = function(line) {
 }
 
 add_dev = function(dev) {
-    if (!_.contains(discard_ips, dev.ip) && !db.has(dev.id) && dev.ip.length > 0 && dev.id.length > 0 && !_.contains(exclude_macs, dev.id))
+    if (!_.contains(discard_ips, dev.ip) && !db.has(dev.id) && dev.ip.length > 0 && dev.id.length > 0 && !_.contains(config.exclude_macs, dev.id))
     {
         db.set(dev.id, dev);
         console.log("Pushed " + dev.id);
@@ -174,9 +168,9 @@ add_dev = function(dev) {
 }
 
 nbtscan_full = function() {
-    if (disable_full_nbtscan) return
-    console.log("Issuing a full nbtscan of "+subnet);
-    var child = exec("nbtscan -s , -r "+subnet,
+    if (config.disable_full_nbtscan) return
+    console.log("Issuing a full nbtscan of "+config.subnet);
+    var child = exec("nbtscan -s , -r "+config.subnet,
         function(error,stdout,stderr) {
             if (error == null)
             {
@@ -195,7 +189,7 @@ nbtscan_full = function() {
  */
 
 in_subnet = function(ip) {
-    var sub = subnet.split('/');
+    var sub = config.subnet.split('/');
     var netip = sub[0].split('.');
     var testip = ip.split('.');
 
@@ -248,7 +242,7 @@ updatedevlist = function(packet) {
     var smac = packet.link.shost;
     var sip = packet.link.ip.saddr;
     var currdev = db.get(smac);
-    if (_.contains(discard_ips, sip) == false && in_subnet(sip) && currdev == undefined && !_.contains(exclude_macs, smac))
+    if (_.contains(discard_ips, sip) == false && in_subnet(sip) && currdev == undefined && !_.contains(config.exclude_macs, smac))
     {
         var dev = { name: sip, id: smac, ip: sip, type: "tower" };
         add_dev(dev);
@@ -275,28 +269,19 @@ setInterval(updatenames, 1800000);
  * PCAP listener
  */
 
-//var pcap_session = pcap.createSession("", "tcp")
-var pcap_session = pcap.createSession("", "src net "+subnet+" and tcp" );
+var pcap_session = pcap.createSession("", "src net "+config.subnet+" and tcp" );
 
 console.log("Listening on " + pcap_session.device_name);
 
 pcap_session.on('packet', function(raw) {
     var packet = pcap.decode.packet(raw);
-    if (!_.contains(exclude_macs, packet.smac))
+    if (!_.contains(config.exclude_macs, packet.smac))
         updatedevlist(packet);
 })
 
 /*
  * Routes
  */
-
-/*
-app.get('/', function(req, res) {
-    res.render('index',
-        { title: 'Home' }
-    )
-})
-*/
 
 app.get('/', function(req, res) {
     res.render('list');
@@ -392,4 +377,4 @@ app.post('/api/alarms', function(req, res) {
     res.status(201).json(req.body);
 });
 
-app.listen(port);
+app.listen(config.port);
