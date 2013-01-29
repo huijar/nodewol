@@ -5,7 +5,7 @@ Nodewol is a simple wake-on-lan tool written with node, underscore, backbone, Ra
 
 ![Screenshot](https://raw.github.com/huijar/nodewol/master/public/img/nodewol_scrot.png)
 
-At the moment the (web-based) UI is optimized for desktop/laptop use. A fully responsive mobile UI is in progress.
+At the moment the (web-based) UI is optimized for desktop/laptop use. A fully responsive mobile UI is in progress. And yes, the clock widget is a shameless ripoff from the exquisite Nokia N9.
 
 ## Installation
 
