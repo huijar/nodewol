@@ -36,6 +36,7 @@ Currently Nodewol requires root privileges because of the packet capturing featu
 * If the browser window is too narrow the panels overlap.
 * Only IPv4 networks are supported.
 * There's no way to add a device manually.
+* The code is poorly documented.
 
 ## License (MIT)
 
