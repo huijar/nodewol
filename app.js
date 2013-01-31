@@ -291,6 +291,8 @@ app.get('/updatenames', function(req, res) {
     res.end(updatenames());
 })
 
+// The RESTful API routes
+
 app.get('/api/devices', function(req, res) {
     var ret = [];
     db.forEach(function(key, value) {

@@ -9,16 +9,32 @@ At the moment the (web-based) UI is optimized for desktop/laptop use. A fully re
 
 ## Installation
 
-Required packages are nodejs, npm, g++ and libpcap-dev (the latter two for dependencies). It is recommended to install nbtscan as well for NetBIOS name resolution and subnet scanning. Nodewol supports reverse DNS as well.
+Required packages are nodejs, npm, g++ and libpcap-dev (the latter two for dependencies). It is recommended to install nbtscan as well for NetBIOS name resolution and subnet scanning. Nodewol does support reverse DNS as well, however.
+
+### Depencencies
 
 On Debian Raspbian "wheezy", the recommended installation procedure is:
 
 <pre>
 sudo apt-get install nodejs npm nbtscan g++ libpcap-dev
-npm install nodewol
 </pre>
 
-On other Debian installations you may have to edit your /etc/apt/sources.list. Instructions for that [here](http://ypcs.fi/howto/2012/10/09/nodejs-debian/). On other distributions you should find a way to install node, npm and nbtscan and the rest can be done with npm.
+On other Debian installations you may have to edit your /etc/apt/sources.list. Instructions for that [here](http://ypcs.fi/howto/2012/10/09/nodejs-debian/). On other distributions you should find a way to install node, npm, nbtscan, g++ and libpcap and the rest can be done with npm.
+
+Next, continue with one of the options below:
+
+### Using git
+
+<pre>
+git clone git://github.com/huijar/nodewol.git
+cd nodewol; npm install
+</pre>
+
+### Using npm
+
+<pre>
+npm install nodewol
+</pre>
 
 ## Configuration
 
@@ -26,7 +42,9 @@ Check config.js.
 
 ## Usage
 
-Currently Nodewol requires root privileges because of the packet capturing feature (which automatically adds devices to the list). In the Nodewol directory, do a "sudo node app.js".
+Currently Nodewol requires root privileges because of the packet capturing feature (which automatically adds devices to the list). In the Nodewol directory, do a "sudo node app.js". Then point your browser at the box (and the port specified in config.js) and you're done!
+
+<strong>Note:</strong> to actually wake up the computers, the WOL/PME feature needs to be enabled from the BIOS. Nodewol sends a "magic packet", so you don't need to enable other waking modes besides the magic packet.
 
 ## Known issues
 

@@ -1,5 +1,7 @@
-var animation
-var myPath
+/*
+ * Initialization and helper functions
+ */
+
 var e
 var e2
 var m
@@ -22,6 +24,9 @@ var hours = [
 
 var h_coords = []
 var m_coords = []
+
+// Get the coordinates for each position of the hour and minute
+// "hands", depending on the base radius
 
 var populate_coords = function(sr, br, baser) {
     var max = 12
@@ -96,6 +101,9 @@ var populate_coords = function(sr, br, baser) {
     }
 }
 
+// Helper function to calculate mouse position relative to the
+// widget
+
 function findTotalOffset(obj) {
     var ol = ot = 0;
     if (obj.offsetParent)
@@ -111,56 +119,8 @@ function findTotalOffset(obj) {
 }
 
 /*
-var genpath = function (x, y, r, time, morh, curr) {
-    var path = "M"
-    path += x + "," + y + "A" + r + "," + r + ",0,"
-
-    var laf = 0 // The large-arc-flag
-    var sf = 1 // The sweep-flag
-
-    // Then the hard(er) part, figuring the endpoint
-
-    var div = morh == 'h' ? 12 : 60;
-
-    time = time % div
-
-    var a = 2*time/div
-    
-    if (a > 0.5) a = 1 - a
-
-    // Either 12 o'clock or 6 o'clock
-    if (time == 0 || time == div/2)
-    {
-        var ex = 0
-        var ey = (time ? 1 : -1) * r
-    }
-    else if (time == div/4 || time == 3*div/4 ) // 3 o'clock or 9 o'clock
-    {
-        var ex = (time == div/4 ? 1 : -1) * r
-        var ey = 0
-    }
-    else
-    {
-        a *= Math.PI
-
-        //var ex = (time > div/2 ? -1 : 1) * r * Math.tan(a) / Math.sqrt(Math.tan(a)^2+1)
-        //var ey = (time < div/4 || time > 3*div/4 ? -1 : 1) * Math.sqrt(r^2 - ex^2)
-        var ex = (time > 3*div/4 ? -1 : 1) * r * Math.tan(a) / Math.sqrt(Math.pow(Math.tan(a),2)+1)
-        var ey = (time < div/4 || time > 3*div/4 ? -1 : 1) * Math.sqrt(Math.pow(r,2) - Math.pow(ex,2))
-    }
-
-    //if (curr - time < div/2 && curr > time) sf = 0
-    //if (( curr <= div/4 || curr >= 3*div/4 ) && (time <= div/4 || time >= 3*div/4)) sf = 0
-
-    ex += 175
-    ey += 175
-
-    path += laf + "," + sf + ","
-    path += ex + "," + ey
-    
-    return path
-}
-*/
+ * The view itself
+ */
 
 var ClockView = Backbone.View.extend({
     text: $("<h1 class='center'></h1>"),
@@ -168,6 +128,10 @@ var ClockView = Backbone.View.extend({
     img: document.createElement('div'),
     imgcont: document.createElement('div'),
     initialize: function() {
+        /*
+         * Creating the view.
+         */
+
         // Radiuses
         this.rad = 175
         this.srad_mult = 0.6
@@ -291,6 +255,11 @@ var ClockView = Backbone.View.extend({
     },
 
     conv_coords: function(event, round, context) {
+        /*
+         * Converts mouse event coordinates to hour and minute
+         * values.
+         */
+
         round = round || false
         context = context || false
 
@@ -419,9 +388,6 @@ var ClockView = Backbone.View.extend({
 
         this.time.html(this.model.toString())
 
-        /*var hpath = genpath(this.h.attr('cx'), this.h.attr('cy'), this.srad - this.ssrad, this.model.h(), 'h', this.h_text.attr('text'))
-          */
-
         p = this.paper.path(path).attr({'stroke-width': 0, 'opacity': 0})
         var len = p.getTotalLength()
         e = ( morh == 'h' ? this.h : this.m )
@@ -439,14 +405,6 @@ var ClockView = Backbone.View.extend({
             run()
             e2.attr('text', this.model.get(morh))
         }
-        /*
-        this.h.animateAlong({
-            path: hpath,
-            rotate: false,
-            duration: 1000,
-            debug: true
-        })
-        */
     }
 })
 

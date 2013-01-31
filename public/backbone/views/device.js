@@ -47,6 +47,8 @@ window.DeviceView = Backbone.View.extend({
         }
         else if ( e.which == 13 ) // Enter
         {
+            // Strip html tags (is done on the backend too)
+
             this.model.set('name', this.$input.attr('value').replace(/<(?:.|\n)*?>/gm, ''));
             this.model.save();
             this.$el.removeClass("editing");
@@ -73,6 +75,8 @@ window.DeviceView = Backbone.View.extend({
     },
 
     render: function(inAllowed) {
+        // Determine whether this is the client device
+
         var thisdev = currdev !== undefined && currdev !== null && currdev.id == this.model.get('id');
         inAllowed = inAllowed === undefined ? thisdev : inAllowed;
         var details = ( this.$el.find(".btn.details").html() == "Hide details" )
@@ -98,6 +102,25 @@ window.DeviceView = Backbone.View.extend({
         this.$el.find("a[rel=tooltip]").tooltip();
         this.$input = this.$("input.edit");
         this.$editlink = this.$("a.edit");
+        return this;
+    }
+});
+
+window.DeviceListView = Backbone.View.extend({
+    initialize: function() {
+        $(this.el).addClass("accordion");
+        this.model.bind("reset", this.render, this);
+        this.model.bind("add", this.addOne, this);
+        this.model.bind("remove", this.render, this);
+    },
+
+    addOne: function(device) {
+        $(this.el).append(new DeviceView({model:device}).render().el);
+    },
+
+    render: function() {
+        $(this.el).html('');
+        _.each(this.model.models, this.addOne, this);
         return this;
     }
 });

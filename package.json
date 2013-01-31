@@ -2,7 +2,7 @@
     "name": "nodewol",
     "description": "A simple wake-on-lan utility",
     "author": "Jari Huilla",
-    "version": "0.0.1",
+    "version": "0.0.2-beta",
     "homepage": "https://github.com/huijar/nodewol",
     "keywords": ["wol", "wake-on-lan"],
     "bin": {
